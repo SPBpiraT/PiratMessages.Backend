@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{771CA22C-852A-43BE-99FA-6191B0F0BD75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8CAD5539-99F7-4DE2-9985-4B87AE05387B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{DB0F17DC-8BC9-4891-A9B1-632B6265E88B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0C7BCE1B-2A85-4555-849D-5AB681A70F9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiratMessages.Domain", "PiratMessages.Domain\PiratMessages.Domain.csproj", "{0A529CD8-A7C5-411E-9F61-F977D8278C54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiratMessages.Application", "PiratMessages.Application\PiratMessages.Application.csproj", "{D666B417-6170-4D29-A59D-0FE746E3CB2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiratMessages.Persistence", "PiratMessages.Persistence\PiratMessages.Persistence.csproj", "{3BDEDDF6-D6A5-4233-A75F-340C4396D926}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiratMessages.WebApi", "PiratMessages.WebApi\PiratMessages.WebApi.csproj", "{72D702CE-07DA-42EE-9257-3D4C06B790CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A529CD8-A7C5-411E-9F61-F977D8278C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A529CD8-A7C5-411E-9F61-F977D8278C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A529CD8-A7C5-411E-9F61-F977D8278C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A529CD8-A7C5-411E-9F61-F977D8278C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D666B417-6170-4D29-A59D-0FE746E3CB2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D666B417-6170-4D29-A59D-0FE746E3CB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D666B417-6170-4D29-A59D-0FE746E3CB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D666B417-6170-4D29-A59D-0FE746E3CB2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BDEDDF6-D6A5-4233-A75F-340C4396D926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDEDDF6-D6A5-4233-A75F-340C4396D926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDEDDF6-D6A5-4233-A75F-340C4396D926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BDEDDF6-D6A5-4233-A75F-340C4396D926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D702CE-07DA-42EE-9257-3D4C06B790CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D702CE-07DA-42EE-9257-3D4C06B790CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D702CE-07DA-42EE-9257-3D4C06B790CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D702CE-07DA-42EE-9257-3D4C06B790CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A529CD8-A7C5-411E-9F61-F977D8278C54} = {771CA22C-852A-43BE-99FA-6191B0F0BD75}
+		{D666B417-6170-4D29-A59D-0FE746E3CB2C} = {771CA22C-852A-43BE-99FA-6191B0F0BD75}
+		{3BDEDDF6-D6A5-4233-A75F-340C4396D926} = {8CAD5539-99F7-4DE2-9985-4B87AE05387B}
+		{72D702CE-07DA-42EE-9257-3D4C06B790CE} = {DB0F17DC-8BC9-4891-A9B1-632B6265E88B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF3A7F48-F58F-4979-8A8A-F8760C83F958}
+	EndGlobalSection
+EndGlobal
