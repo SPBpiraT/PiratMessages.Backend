@@ -29,4 +29,5 @@ namespace PiratMessages.Application.Messages.Queries.GetMessageDetails
 
             return _mapper.Map<MessageDetailsVm>(entity);
         }
+    }
 }
