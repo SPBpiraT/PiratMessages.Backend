@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PiratMessages.Application\PiratMessages.Application.csproj" />
+    <ProjectReference Include="..\PiratMessages.Persistence\PiratMessages.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
