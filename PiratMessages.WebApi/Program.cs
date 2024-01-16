@@ -2,6 +2,7 @@ using PiratMessages.Application;
 using PiratMessages.Application.Common.Mappings;
 using PiratMessages.Application.Interfaces;
 using PiratMessages.Persistence;
+using PiratMessages.WebApi.Middleware;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
