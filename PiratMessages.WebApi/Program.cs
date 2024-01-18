@@ -1,9 +1,13 @@
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PiratMessages.Application;
 using PiratMessages.Application.Common.Mappings;
 using PiratMessages.Application.Interfaces;
 using PiratMessages.Persistence;
+using PiratMessages.WebApi.Jwt;
 using PiratMessages.WebApi.Middleware;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +31,36 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JWTSettings"));
+
+var secretKey = builder.Configuration.GetSection("JWTSettings:SecretKey").Value;
+var issuer = builder.Configuration.GetSection("JWTSettings:Issuer").Value;
+var audience = builder.Configuration.GetSection("JWTSettings:Audience").Value;
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = issuer,
+            ValidateAudience = true,
+            ValidAudience = audience,
+            ValidateLifetime = true,
+            IssuerSigningKey = signingKey,
+            ValidateIssuerSigningKey = true,
+            LifetimeValidator = CustomJwtTokenLifetime.CustomLifetimeValidator
+        };
+    });
+
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -46,12 +80,16 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
