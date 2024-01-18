@@ -3,7 +3,7 @@ using PiratMessages.Application.Common.Mappings;
 using PiratMessages.Application.Messages.Commands.CreateMessage;
 using System.ComponentModel.DataAnnotations;
 
-namespace PiratMessages.WebApi.Models
+namespace PiratMessages.WebApi.Models.Messages
 {
     public class CreateMessageDto : IMapWith<CreateMessageCommand>
     {

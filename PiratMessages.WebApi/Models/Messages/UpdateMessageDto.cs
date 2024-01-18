@@ -2,7 +2,7 @@
 using PiratMessages.Application.Common.Mappings;
 using PiratMessages.Application.Messages.Commands.UpdateMessage;
 
-namespace PiratMessages.WebApi.Models
+namespace PiratMessages.WebApi.Models.Messages
 {
     public class UpdateMessageDto : IMapWith<UpdateMessageCommand>
     {

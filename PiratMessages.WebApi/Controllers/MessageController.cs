@@ -5,7 +5,7 @@ using PiratMessages.Application.Messages.Commands.DeleteMessage;
 using PiratMessages.Application.Messages.Commands.UpdateMessage;
 using PiratMessages.Application.Messages.Queries.GetMessageDetails;
 using PiratMessages.Application.Messages.Queries.GetMessageList;
-using PiratMessages.WebApi.Models;
+using PiratMessages.WebApi.Models.Messages;
 
 namespace PiratMessages.WebApi.Controllers
 {
