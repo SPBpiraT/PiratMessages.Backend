@@ -8,6 +8,8 @@ using PiratMessages.WebApi.Jwt;
 using PiratMessages.WebApi.Middleware;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddAutoMapper(config =>
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddControllers();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MessagesDbContext>();
 
 builder.Services.AddCors(options =>
 {
