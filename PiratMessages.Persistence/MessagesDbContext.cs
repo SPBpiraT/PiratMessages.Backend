@@ -7,7 +7,7 @@ using PiratMessages.Persistence.EntityTypeConfiguration;
 
 namespace PiratMessages.Persistence
 {
-    public class MessagesDbContext : IdentityDbContext, IMessagesDbContext 
+    public class MessagesDbContext : IdentityDbContext<IdentityUser>, IMessagesDbContext 
     {
         public DbSet<Message> Messages { get; set; }
         public DbSet<IdentityUser> Users { get; set; }

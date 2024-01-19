@@ -18,8 +18,4 @@
     <ProjectReference Include="..\PiratMessages.Persistence\PiratMessages.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Users\" />
-  </ItemGroup>
-
 </Project>
