@@ -37,6 +37,8 @@ namespace PiratMessages.WebApi.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
                 List<Claim> claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
                 claims.Add(new Claim(ClaimTypes.Email, registerRequest.Email));
 
                 await _userManager.AddClaimsAsync(user, claims);
@@ -68,7 +70,6 @@ namespace PiratMessages.WebApi.Controllers
         private string GetToken(IdentityUser user, IEnumerable<Claim> principal)
         {
             var claims = principal.ToList();
-            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey));
 
