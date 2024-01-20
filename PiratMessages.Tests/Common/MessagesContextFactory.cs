@@ -9,8 +9,8 @@ namespace PiratMessages.Tests.Common
         public static Guid UserAId = Guid.NewGuid();
         public static Guid UserBId = Guid.NewGuid();
 
-        public static Guid NoteIdForDelete = Guid.NewGuid();
-        public static Guid NoteIdForUpdate = Guid.NewGuid();
+        public static Guid MessageIdForDelete = Guid.NewGuid();
+        public static Guid MessageIdForUpdate = Guid.NewGuid();
 
         public static MessagesDbContext Create()
         {
@@ -28,7 +28,8 @@ namespace PiratMessages.Tests.Common
                     Details = "Details1",
                     EditDate = null,
                     Id = Guid.Parse("872F42FC-218B-4314-BD39-209E02B9ECC8"),
-                    UserId = UserAId
+                    UserId = UserAId,
+                    DestinationUserId = UserBId
                 },
 
                 new Message
@@ -37,7 +38,8 @@ namespace PiratMessages.Tests.Common
                     Details = "Details2",
                     EditDate = null,
                     Id = Guid.Parse("6A651058-11F4-4A38-9A79-ACBB497B092C"),
-                    UserId = UserBId
+                    UserId = UserBId,
+                    DestinationUserId = UserAId
                 },
 
                 new Message
@@ -45,7 +47,7 @@ namespace PiratMessages.Tests.Common
                     CreationDate = DateTime.Today,
                     Details = "Details3",
                     EditDate = null,
-                    Id = NoteIdForDelete,
+                    Id = MessageIdForDelete,
                     UserId = UserAId
                 },
 
@@ -54,7 +56,7 @@ namespace PiratMessages.Tests.Common
                     CreationDate = DateTime.Today,
                     Details = "Details4",
                     EditDate = null,
-                    Id = NoteIdForUpdate,
+                    Id = MessageIdForUpdate,
                     UserId = UserBId
                 }
             );
