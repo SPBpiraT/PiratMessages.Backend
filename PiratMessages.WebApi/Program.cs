@@ -10,6 +10,11 @@ using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
+using PiratMessages.WebApi;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,12 +67,13 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-builder.Services.AddSwaggerGen(config =>
-{
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    config.IncludeXmlComments(xmlPath);
-});
+builder.Services.AddVersionedApiExplorer(options =>
+    options.GroupNameFormat = "'v'VVV");
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
+    ConfigureSwaggerOptions>();
+
+builder.Services.AddSwaggerGen();
+builder.Services.AddApiVersioning();
 
 var app = builder.Build();
 
@@ -91,8 +97,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(config =>
     {
-        config.RoutePrefix = String.Empty;
-        config.SwaggerEndpoint("swagger/v1/swagger.json", "PiratMessages API");
+        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            config.SwaggerEndpoint(
+                $"/swagger/{description.GroupName}/swagger.json",
+                description.GroupName.ToUpperInvariant());
+
+            config.RoutePrefix = String.Empty;
+        }
     });
 }
 
@@ -102,6 +116,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseApiVersioning();
 
 app.UseEndpoints(endpoints =>
 {
