@@ -62,7 +62,12 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
 
 var app = builder.Build();
 
@@ -84,7 +89,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(config =>
+    {
+        config.RoutePrefix = String.Empty;
+        config.SwaggerEndpoint("swagger/v1/swagger.json", "PiratMessages API");
+    });
 }
 
 app.UseCustomExceptionHandler();
