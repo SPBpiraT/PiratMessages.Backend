@@ -10,8 +10,10 @@ using System.Text;
 
 namespace PiratMessages.WebApi.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Produces("application/json")]
+    [Route("api/{version:apiVersion}/[controller]")]
     public class AccountController : BaseController
     {
         private readonly UserManager<IdentityUser> _userManager; 
@@ -25,7 +27,26 @@ namespace PiratMessages.WebApi.Controllers
             _options = optAccess.Value;
         }
 
+        /// <summary>
+        /// Register a user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /register
+        /// {
+        ///     Email: "test@test.com",
+        ///     Password: "tT@2est",
+        ///     Username: "Tester"
+        ///     
+        /// }
+        /// </remarks>
+        /// <param name="registerRequest">RegisterRequest object</param>
+        /// <returns></returns>
+        /// <response code="200">Success</response>
+        /// <responce code="400">If the data did not pass validation</responce>
         [HttpPost("Register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
             var user = new IdentityUser { UserName = registerRequest.UserName, Email = registerRequest.Email };
@@ -49,7 +70,25 @@ namespace PiratMessages.WebApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Authenticate a user a user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// POST /signin
+        /// {
+        ///     Email: "test@test.com",
+        ///     Password: "tT@2est",
+        ///     
+        /// }
+        /// </remarks>
+        /// <param name="authenticateRequest">AuthenticateRequest object</param>
+        /// <returns></returns>
+        /// <response code="200">Success</response>
+        /// <responce code="400">If the data did not pass validation</responce>
         [HttpPost("SignIn")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn(AuthenticateRequest authenticateRequest)
         {
             var user = await _userManager.FindByEmailAsync(authenticateRequest.Email);
