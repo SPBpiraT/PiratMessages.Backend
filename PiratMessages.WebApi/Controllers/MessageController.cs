@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PiratMessages.Application.Messages.Commands.CreateMessage;
 using PiratMessages.Application.Messages.Commands.DeleteMessage;
@@ -28,6 +29,7 @@ namespace PiratMessages.WebApi.Controllers
             return Ok(vm);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<MessageDetailsVm>> Get(Guid id)
         {
@@ -41,6 +43,7 @@ namespace PiratMessages.WebApi.Controllers
             return Ok(vm);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateMessageDto createMessageDto)
         {
@@ -50,6 +53,7 @@ namespace PiratMessages.WebApi.Controllers
             return Ok(messageId);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateMessageDto updateMessageDto)
         {
@@ -59,6 +63,7 @@ namespace PiratMessages.WebApi.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
