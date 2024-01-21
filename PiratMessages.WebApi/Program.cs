@@ -15,8 +15,18 @@ using Microsoft.Extensions.Options;
 using PiratMessages.WebApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using PiratMessages.WebApi.Services;
+using Serilog.Events;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+               .WriteTo.File("MessagesWebAppLog-.txt", rollingInterval:
+               RollingInterval.Day)
+               .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 
 builder.Services.AddAutoMapper(config =>
 {
@@ -74,6 +84,8 @@ builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning();
+builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -87,7 +99,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception exception)
     {
-       
+        Log.Fatal(exception, "An error occurred while app initialization");
     }
 }
 
