@@ -9,8 +9,6 @@ using PiratMessages.WebApi.Middleware;
 using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using System;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 using PiratMessages.WebApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -35,7 +33,7 @@ builder.Services.AddAutoMapper(config =>
 });
 
 builder.Services.AddApplication();
-builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddPersistence();
 builder.Services.AddControllers();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MessagesDbContext>();
 

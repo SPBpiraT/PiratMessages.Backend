@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PiratMessages.Domain;
 using PiratMessages.Application.Interfaces;
-using PiratMessages.Persistence.EntityTypeConfiguration;
+using System.Reflection;
 
 namespace PiratMessages.Persistence
 {
@@ -17,7 +17,7 @@ namespace PiratMessages.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new MessageConfiguration());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }
     }

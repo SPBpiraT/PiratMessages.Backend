@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks:
+  backend:
+
+services:
+  piratmessages.db:
+    container_name: piratmessages-db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=password@12345#
+    networks:
+      - backend 
+    ports:
+      - 8001:1433
+  piratmessages.webapi:
+    container_name: piratmessages-webapi
+    image: ${DOCKER_REGISTRY-}piratmessageswebapi
+    build:
+      context: .
+      dockerfile: PiratMessages.WebApi/Dockerfile
+    networks:
+      - backend
+    ports:
+      - 8002:80
+    environment:
+      - DB_HOST=piratmessages.db
+      - DB_NAME=piratmessagesdb
+      - DB_SA_PASSWORD=password@12345#
