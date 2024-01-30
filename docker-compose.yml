@@ -14,6 +14,7 @@ services:
       - backend 
     ports:
       - 8001:1433
+
   piratmessages.webapi:
     container_name: piratmessages-webapi
     image: ${DOCKER_REGISTRY-}piratmessageswebapi
@@ -28,3 +29,14 @@ services:
       - DB_HOST=piratmessages.db
       - DB_NAME=piratmessagesdb
       - DB_SA_PASSWORD=password@12345#
+
+  piratmessages.seq:
+    container_name: piratmessages-seq
+    image: datalust/seq:latest
+    environment:
+      - ACCEPT_EULA=Y
+    networks:
+      - backend
+    ports:
+      - 5341:5341
+      - 8081:80
