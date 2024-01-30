@@ -119,6 +119,7 @@ if (app.Environment.IsDevelopment())
 app.UseCustomExceptionHandler();
 app.UseRouting();
 app.UseHttpsRedirection();
+app.UseSerilogRequestLogging();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
