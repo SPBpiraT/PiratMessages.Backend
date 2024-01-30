@@ -17,14 +17,10 @@ using PiratMessages.WebApi.Services;
 using Serilog.Events;
 using Serilog;
 
-Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-               .WriteTo.File("MessagesWebAppLog-.txt", rollingInterval:
-               RollingInterval.Day)
-               .CreateLogger();
-
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog();
+
+builder.Host.UseSerilog((context, loggerConfig) =>
+    loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddAutoMapper(config =>
 {
