@@ -1,20 +1,20 @@
+using System.Reflection;
+using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using PiratMessages.Application;
 using PiratMessages.Application.Common.Mappings;
 using PiratMessages.Application.Interfaces;
 using PiratMessages.Persistence;
 using PiratMessages.WebApi.Jwt;
 using PiratMessages.WebApi.Middleware;
-using System.Reflection;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using PiratMessages.WebApi;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using PiratMessages.WebApi.Services;
-using Serilog.Events;
+using PiratMessages.Messaging.RabbitMQ.Extensions;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +80,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddRabbitMQ();
 
 var app = builder.Build();
 

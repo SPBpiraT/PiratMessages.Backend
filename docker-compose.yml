@@ -40,3 +40,17 @@ services:
     ports:
       - 5341:5341
       - 8081:80
+
+  piratmessages.messaging:
+    container_name: piratmessages-rabbitmq
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - backend
+    ports:
+      - 15672:15672
+      - 5672:5672

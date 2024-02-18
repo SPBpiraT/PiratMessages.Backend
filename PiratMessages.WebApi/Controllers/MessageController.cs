@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PiratMessages.Application.Common.Messaging;
+using PiratMessages.Application.Interfaces;
 using PiratMessages.Application.Messages.Commands.CreateMessage;
 using PiratMessages.Application.Messages.Commands.DeleteMessage;
 using PiratMessages.Application.Messages.Commands.UpdateMessage;
@@ -17,8 +19,13 @@ namespace PiratMessages.WebApi.Controllers
     public class MessageController : BaseController
     {
         private readonly IMapper _mapper;
+        private readonly IMessagingClient _rabbitMqClient;
 
-        public MessageController(IMapper mapper) => _mapper = mapper;
+        public MessageController(IMapper mapper, IMessagingClient rabbitMqClient)
+        {
+            _mapper = mapper;
+            _rabbitMqClient = rabbitMqClient;
+        }
 
         /// <summary>  
         /// Gets the list
@@ -95,7 +102,14 @@ namespace PiratMessages.WebApi.Controllers
             var command = _mapper.Map<CreateMessageCommand>(createMessageDto);
             command.UserId = UserId;
             var messageId = await Mediator.Send(command);
+
+            _rabbitMqClient.ExchangeDeclare("test", ExchangeType.Topic);
+            _rabbitMqClient.QueueDeclareAsync("test");
+            _rabbitMqClient.PublishToQueue("test", "mymessage");
+
             return Ok(messageId);
+
+           
         }
 
         /// <summary>
