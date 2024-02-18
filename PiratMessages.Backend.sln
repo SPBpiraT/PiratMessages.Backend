@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiratMessages.Tests", "Pira
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1D1974DC-8A90-4BBB-9B12-06FACBF61A4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiratMessages.Messaging.RabbitMQ", "PiratMessages.Messaging.RabbitMQ\PiratMessages.Messaging.RabbitMQ.csproj", "{7EBCCF2F-2017-433C-806E-D23798242C85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{1D1974DC-8A90-4BBB-9B12-06FACBF61A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D1974DC-8A90-4BBB-9B12-06FACBF61A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D1974DC-8A90-4BBB-9B12-06FACBF61A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EBCCF2F-2017-433C-806E-D23798242C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBCCF2F-2017-433C-806E-D23798242C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EBCCF2F-2017-433C-806E-D23798242C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBCCF2F-2017-433C-806E-D23798242C85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{3BDEDDF6-D6A5-4233-A75F-340C4396D926} = {8CAD5539-99F7-4DE2-9985-4B87AE05387B}
 		{72D702CE-07DA-42EE-9257-3D4C06B790CE} = {DB0F17DC-8BC9-4891-A9B1-632B6265E88B}
 		{6669CB05-51B8-49DF-AE22-BC76B560A6CC} = {0C7BCE1B-2A85-4555-849D-5AB681A70F9B}
+		{7EBCCF2F-2017-433C-806E-D23798242C85} = {8CAD5539-99F7-4DE2-9985-4B87AE05387B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF3A7F48-F58F-4979-8A8A-F8760C83F958}
