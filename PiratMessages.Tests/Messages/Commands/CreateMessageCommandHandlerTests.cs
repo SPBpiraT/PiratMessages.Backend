@@ -10,7 +10,7 @@ namespace PiratMessages.Tests.Messages.Commands
         public async Task CreateMessageCommandHandler_Success()
         {
             //Arrange           
-            var handler = new CreateMessageCommandHandler(Context);
+            var handler = new CreateMessageCommandHandler(Context, _messagingClientMock.Object, _cachingClientMock.Object);
             var messageDetails = "message details";
             var recipient = MessagesContextFactory.UserBId;
 
