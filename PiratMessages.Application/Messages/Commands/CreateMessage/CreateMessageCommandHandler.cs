@@ -41,8 +41,8 @@ namespace PiratMessages.Application.Messages.Commands.CreateMessage
             await _cachingClient.SetAsync("test", $"{message.Id}", cancellationToken: cancellationToken);
             var test = await _cachingClient.GetAsync<string>("test", cancellationToken: cancellationToken);
 
-            return new Guid(test);
-            //return message.Id;
+            //return new Guid(test);
+            return message.Id;
         }
     }
 }

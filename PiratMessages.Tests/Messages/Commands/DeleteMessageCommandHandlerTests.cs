@@ -50,7 +50,7 @@ namespace PiratMessages.Tests.Messages.Commands
         {
             //Arrange
             var deleteHandler = new DeleteMessageCommandHandler(Context);
-            var createHandler = new CreateMessageCommandHandler(Context);
+            var createHandler = new CreateMessageCommandHandler(Context, _messagingClientMock.Object, _cachingClientMock.Object);
 
             var messageId = await createHandler.Handle(
                 new CreateMessageCommand
