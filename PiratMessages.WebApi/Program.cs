@@ -14,8 +14,10 @@ using PiratMessages.WebApi.Middleware;
 using PiratMessages.WebApi;
 using PiratMessages.WebApi.Services;
 using PiratMessages.Messaging.RabbitMQ.Extensions;
+using PiratMessages.Caching.Redis.Extensions;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Serilog;
+using PiratMessages.WebApi.HostedServices.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,8 +81,10 @@ builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
 builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
+builder.Services.AddApplicationHostedServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddRabbitMQ();
+builder.Services.AddRedis();
 
 var app = builder.Build();
 

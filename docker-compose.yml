@@ -54,3 +54,14 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+
+  piratmessages.caching:
+    container_name: piratmessages-rediscache
+    image: redis:latest
+    hostname: rediscache
+    restart: always
+    networks:
+      - backend
+    ports: 
+      - '6379:6379'
+
