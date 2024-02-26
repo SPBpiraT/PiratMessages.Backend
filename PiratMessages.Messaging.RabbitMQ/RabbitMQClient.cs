@@ -7,6 +7,7 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 using System.Text.Json;
 using ExchangeType = PiratMessages.Application.Common.Messaging.ExchangeType;
+using Serilog;
 
 namespace PiratMessages.Messaging.RabbitMQ
 {
