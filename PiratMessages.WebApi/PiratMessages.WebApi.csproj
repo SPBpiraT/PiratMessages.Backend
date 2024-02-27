@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PiratMessages.Caching.Redis\PiratMessages.Caching.Redis.csproj" />
     <ProjectReference Include="..\PiratMessages.Application\PiratMessages.Application.csproj" />
+    <ProjectReference Include="..\PiratMessages.Caching.Redis\PiratMessages.Caching.Redis.csproj" />
     <ProjectReference Include="..\PiratMessages.Messaging.RabbitMQ\PiratMessages.Messaging.RabbitMQ.csproj" />
     <ProjectReference Include="..\PiratMessages.Persistence\PiratMessages.Persistence.csproj" />
   </ItemGroup>
