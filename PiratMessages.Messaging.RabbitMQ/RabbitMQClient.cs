@@ -1,6 +1,5 @@
 ﻿using PiratMessages.Messaging.RabbitMQ.Options;
 using PiratMessages.Application.Interfaces;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -13,7 +12,6 @@ namespace PiratMessages.Messaging.RabbitMQ
 {
     public class RabbitMQClient : IMessagingClient
     {
-        private readonly ILogger<RabbitMQClient> _logger;
         private readonly RabbitMQOptions _options;
         private readonly ConnectionFactory _connectionFactory;
         private readonly AmqpTcpEndpoint[] _amqpTcpEndpoints;
@@ -24,11 +22,8 @@ namespace PiratMessages.Messaging.RabbitMQ
         private volatile IConnection? _connection;
         private volatile ChannelWrapper? _channel;
 
-        public RabbitMQClient(
-            ILogger<RabbitMQClient> logger,
-            IOptions<RabbitMQOptions> options)
+        public RabbitMQClient(IOptions<RabbitMQOptions> options)
         {
-            _logger = logger;
             _options = options.Value;
 
             var endpoints = GetEndpoints();
@@ -48,7 +43,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                 var threadId = Environment.CurrentManagedThreadId;
                 var channelId = channelWrapper.Id;
 
-                _logger.LogDebug(
+                Log.Debug(
                     "Declaring exchange {Name} thread {ThreadId} channel {ChannelId}",
                     name,
                     threadId,
@@ -56,7 +51,7 @@ namespace PiratMessages.Messaging.RabbitMQ
 
                 channel.ExchangeDeclare(name, GetExchangeType(type));
 
-                _logger.LogInformation(
+                Log.Information(
                     "Declared exchange {Name} thread {ThreadId} channel {ChannelId}",
                     name,
                     threadId,
@@ -97,7 +92,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                     autoDelete: string.IsNullOrWhiteSpace(queue),
                     arguments: arguments);
 
-                _logger.LogDebug("Queue {Queue} declared", queue);
+                Log.Debug("Queue {Queue} declared", queue);
             }
         }
 
@@ -135,7 +130,7 @@ namespace PiratMessages.Messaging.RabbitMQ
             {
                 foreach (var routingKey in routingKeys)
                 {
-                    _logger.LogInformation(
+                    Log.Information(
                         "QueueUnbind: {Queue}, {Exchange}, {RoutingKey}",
                         queue,
                         exchange,
@@ -245,7 +240,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e, "Failed to consume");
+                    Log.Error(e, "Failed to consume");
 
                     if (!acked)
                         channel.BasicNack(ea.DeliveryTag, multiple: false, requeue: false);
@@ -288,7 +283,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Handling Connection creation exception");
+                    Log.Error(ex, "Handling Connection creation exception");
                     throw;
                 }
 
@@ -310,7 +305,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                 }
                 catch (BrokerUnreachableException ex)
                 {
-                    _logger.LogError(
+                    Log.Error(
                         ex,
                         "Failed to create automatically on attempt {Attempt}: {ExcMessage}",
                         createAttempt,
@@ -348,7 +343,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                 var threadId = Thread.CurrentThread.ManagedThreadId;
                 var channelId = _channel.Id;
 
-                _logger.LogInformation("Channel created ID: {ChannelId} on thread {ThreadId}", channelId, threadId);
+                Log.Information("Channel created ID: {ChannelId} on thread {ThreadId}", channelId, threadId);
 
                 return _channel;
             }
@@ -416,7 +411,7 @@ namespace PiratMessages.Messaging.RabbitMQ
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Safe Abort of channel failed");
+                    Log.Error(ex, "Safe Abort of channel failed");
                 }
             }
 
@@ -429,14 +424,14 @@ namespace PiratMessages.Messaging.RabbitMQ
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Safe Abort of connection failed");
+                    Log.Error(ex, "Safe Abort of connection failed");
                 }
             }
         }
 
         private void Fail(string stage, int recoverAttempt, Exception exc, IConnection? previousConnection = null)
         {
-            _logger.LogError("Fail called on stage {Stage}", stage);
+            Log.Error("Fail called on stage {Stage}", stage);
 
             if (_isAborted)
                 return;
@@ -457,7 +452,7 @@ namespace PiratMessages.Messaging.RabbitMQ
         {
             connection.ConnectionRecoveryError += (s, a) =>
             {
-                _logger.LogCritical("Connection recovery was failed. Killing pod");
+                Log.Error("Connection recovery was failed. Killing pod");
 
                 Environment.ExitCode = 1;
                 Environment.Exit(Environment.ExitCode);
@@ -465,7 +460,7 @@ namespace PiratMessages.Messaging.RabbitMQ
 
             connection.RecoverySucceeded += (s, a) =>
             {
-                _logger.LogCritical("Connection recovery was successful. Anyway, killing host");
+                Log.Error("Connection recovery was successful. Anyway, killing host");
 
                 Environment.ExitCode = 1;
                 Environment.Exit(Environment.ExitCode);
